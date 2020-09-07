@@ -1,0 +1,271 @@
+<html>
+<head>
+<title>8051</title>
+<style> 
+body {
+ 
+background-color: #92a8d1;
+ 
+      
+  
+
+       
+}
+</style>
+</head>
+<body>
+
+<h1 style="color:red;font-size:40px;">8051 Memory Organization</h1>
+<p style="font-size:18px;">The 8051 microcontroller's memory is divided into Program Memory and Data Memory. Program Memory (ROM) is used for permanent 
+saving program being executed, while Data Memory (RAM) is used for temporarily storing and keeping intermediate results and variables.</p>
+<p style="font-size:25px;">Program Memory (ROM)</p>
+<p style="font-size:18px;">Program Memory (ROM) is used for permanent saving program (CODE) being executed. The memory is read only. Depending on the settings made 
+in compiler, program memory may also used to store a constant variables.
+The 8051 executes programs stored in program memory only. code memory type specifier is used to refer to program memory.</p><br>
+<p style="font-size:18px;">8051 memory organization alows external program memory to be added.
+How does the microcontroller handle external memory depends on the pin EA logical state.</p>
+<img src="a.jpeg"  width="600" height="450" style="vertical-align:middle;margin:0px 250px">
+<p style="font-size:25px;">Internal Data Memory</p>
+<p style="font-size:18px;">Up to 256 bytes of internal data memory are available depending on the 8051 derivative. Locations available to the user occupy addressing
+ space from 0 to 7Fh, i.e. first 128 registers and this part of RAM is divided in several blocks. 
+The first 128 bytes of internal data memory are both directly and indirectly addressable.
+ The upper 128 bytes of data memory (from 0x80 to 0xFF) can be addressed only indirectly.</p>
+<p style="font-size:18px;">Since internal data memory is used for CALL stack also and there is only 256 bytes splited over few different memory areas fine utilizing 
+of this memory is crucial for fast and compact code. See types efficiency also.
+
+Memory block in the range of 20h to 2Fh is bit-addressable, which means that each bit being there has its own address from 0 to 7Fh. Since there are 16 such registers,
+ this block contains in total of 128 bits with separate addresses
+ ( Bit 0 of byte 20h has the bit address 0, and bit 7 of byte 2Fh has the bit address 7Fh).
+Three memory type specifiers can be used to refer to the internal data memory: data, idata, and bdata.</p>
+<img src="c.jpeg"  width="800" height="550" style="vertical-align:middle;margin:0px 250px">
+<p style="font-size:25px;">External Data Memory</p>
+<p style="font-size:18px;">Access to external memory is slower than access to internal data memory. There may be up to 64K Bytes of external data memory.
+ Several 8051 devices provide on-chip XRAM space that is accessed with the same instructions as the traditional external data space. 
+This XRAM space is typically enabled via proper setting of SFR register and overlaps the external memory space. Setting of that register must be manualy done in
+ code, before any access to external memory or XRAM space is made.
+The mikroC PRO for 8051 has two memory type specifiers that refers to external memory space: xdata and pdata.</p>
+<p style="font-size:25px;">SFR Memory</p>
+<p style="font-size:18px;">The 8051 provides 128 bytes of memory for Special Function Registers (SFRs). SFRs are bit, byte, or word-sized registers that are used to 
+control timers, counters, serial I/O, port I/O, and peripherals.</p>
+<p style="color:blue;font-size:40px;">Addressing modes of 8051</p>
+<p style="font-size:18px;">In this section, we will see different addressing modes of the 8051 microcontrollers.
+ In 8051 there are 1-byte, 2-byte instructions and very few 3-byte instructions are present. 
+The opcodes are 8-bit long. As the opcodes are 8-bit data, there are 256 possibilities. Among 256, 255 opcodes are implemented.<br>
+
+The clock frequency is12MHz, so 64 instruction types are executed in just 1 µs, and rest are just 2 µs.
+ The Multiplication and Division operations take 4 µsto to execute.</p>
+<ul>
+  <li>Immediate AddressingMode</li>
+  <li>Register AddressingMode</li>
+  <li>Direct AddressingMode</li>
+<li>Register IndirectAddressing Mode</li>
+  <li>Indexed AddressingMode</li>
+  <li>Implied AddressingMode</li>
+
+</ul>
+<p style="font-size:25px;">Immediate addressing mode</p>
+<p style="font-size:18px;">In this Immediate Addressing Mode, the data is provided in the instruction itself. The data is provided immediately after the opcode. 
+These are some examples of Immediate Addressing Mode.</p><br>MOVA, #0AFH;<br>
+MOVR3, #45H;<br>
+MOVDPTR, #FE00H;<br>
+<p style="font-size:18px;">In these instructions, the # symbol is used for immediate data. In the last instruction, there is DPTR. The DPTR stands for Data Pointer.
+ Using this, it points the external data memory location. In the first instruction, the immediate data is AFH, but one 0 is added at the beginning.
+ So when the data is starting with A to F, the data should be preceded by 0.</p>
+<p style="font-size:25px;">Register addressing mode</p>
+<p style="font-size:18px;">In the register addressing mode the source or destination data should be present in a register (R0 to R7). 
+These are some examples of RegisterAddressing Mode.</p><br>MOVA, R5;<br>
+MOVR2, #45H;<br>
+MOVR0, A;<br>
+<p style="font-size:18px;">In 8051, there is no instruction like MOVR5, R7. But we can get the same result by using this instruction MOV R5, 07H, or by using MOV
+ 05H, R7. But this two instruction will work when the selected register bank is RB0. To use another register bank and to get the same effect, we have to add the 
+starting address of that register bank with the register number. For an example, if the RB2 is selected, and we want to access R5, then the address will be
+ (10H + 05H = 15H), so the instruction will look like this MOV 15H, R7. Here 10H is the starting address of Register Bank 2.</p>
+<p style="font-size:25px;">Direct Addressing Mode</p>
+<p style="font-size:18px;">In the Direct Addressing Mode, the source or destination address is specified by using 8-bit data in the instruction. Only the internal data memory can be used in this mode. 
+Here some of the examples of direct Addressing Mode.</p><br>MOV80H, R6;<br>
+MOVR2, 45H;<br>
+MOVR0, 05H;<br>
+<p style="font-size:18px;">The first instruction will send the content of registerR6 to port P0 (Address of Port 0 is 80H). The second one is forgetting content from 45H to R2. 
+The third one is used to get data from Register R5 (When register bank RB0 is selected) to register R5.</p>
+<p style="font-size:25px;">Register indirect addressing Mode</p>
+<p style="font-size:18px;">In this mode, the source or destination address is given in the register. By using register indirect addressing mode, 
+the internal or external addresses can be accessed. The R0 and R1 are used for 8-bit addresses, and DPTR is used for 16-bit addresses, 
+no other registers can be used for addressing purposes. Let us see some examples of this mode.</p>
+
+MOV0E5H, @R0;<br>
+MOV@R1, 80H <br>
+<br>
+In the instructions, the @ symbol is used for register indirect addressing. In the first instruction, 
+it is showing that theR0 register is used. If the content of R0 is 40H, then that instruction will take the data which is located at location 40H 
+of the internal RAM. In the second one, if the content of R1 is 30H, 
+then it indicates that the content of port P0 will be stored at location 30H in the internal RAM.<br>
+<br>
+MOVXA, @R1;<br>
+MOV@DPTR, A;
+<br><br>
+In these two instructions, the X in MOVX indicates the external data memory. The external data memory can only be accessed in register indirect mode. 
+In the first instruction if the R0 is holding 40H, then A will get the content of external RAM location40H.
+ And in the second one, the content of A is overwritten in the location pointed by DPTR.
+<p style="font-size:25px;">Indexed addressing mode</p>
+<p style="font-size:18px;">In the indexed addressing mode, the source memory can only be accessed from program memory only. The destination operand is always the 
+register A. These are some examples of Indexed addressing mode.
+<br><br>
+MOVCA, @A+PC;<br>
+MOVCA, @A+DPTR;<br><br>
+The C in MOVC instruction refers to code byte. For the first instruction, let us consider A holds 30H. And the PC value is1125H. The contents of program memory
+ location 1155H (30H + 1125H) are moved to register A.</p>
+<p style="font-size:25px;">Implied Addressing Mode</p>
+<p style="font-size:18px;">In the implied addressing mode, there will be a single operand. These types of instruction can work on specific registers only.
+These types of instructions are also known as register specific instruction. Here are some examples of Implied Addressing Mode.
+<br><br>
+RLA;<br>
+SWAPA;<br><br>
+These are 1- byte instruction. The first one is used to rotate the A register content to the Left. The second one is used to swap the nibbles in A.</p>
+<p style="color:purple;font-size:40px;">8051 Microcontroller Instruction Set</p>
+<p style="font-size:18px;">The Architecture of 8051 and the Memory Organization of the 8051 Microcontroller. Continuing further, we will take a look at the
+ 8051 Microcontroller Instruction Set and the 8051 Addressing Modes Below</p>
+<p style="font-size:25px;">Introduction to 8051 Microcontroller Instruction Set</p>
+<p style="font-size:18px;">Writing a Program for any Microcontroller consists of giving commands to the Microcontroller in a particular order in which they must
+ be executed in order to perform a specific task. The commands to the Microcontroller are known as a Microcontroller’s Instruction Set.<br>
+
+Just as our sentences are made of words, a Microcontroller’s (for that matter, any computer) program is made of Instructions. Instructions written in a program tell 
+the Microcontroller which operation to carry out.<br>
+
+An Instruction Set is unique to a family of computers. This tutorial introduces the 8051 Microcontroller Instruction Set also called as the MCS-51 Instruction Set.<br>
+
+As the 8051 family of Microcontrollers are 8-bit processors, the 8051 Microcontroller Instruction Set is optimized for 8-bit control applications. As a typical 8-bit
+ processor, the 8051 Microcontroller instructions have 8-bit Opcodes. As a result, the 8051 Microcontroller instruction set can have up to 28 = 256 Instructions.</p>
+<p style="font-size:25px;">Types of Instructions in 8051 Microcontroller Instruction Set</p>
+<p style="font-size:18px;">Before seeing the types of instructions, let us see the structure of the 8051 Microcontroller Instruction. An 8051 Instruction consists of an Opcode (short of Operation – Code)
+ followed by Operand(s) of size Zero Byte, One Byte or Two Bytes.<br>
+
+The Op-Code part of the instruction contains the Mnemonic, which specifies the type of operation to be performed. All Mnemonics or the Opcode part of the instruction are of One Byte size.<br>
+
+Coming to the Operand part of the instruction, it defines the data being processed by the instructions. The operand can be any of the following:</p>
+<ul>
+  <li>No Operand</li>
+  <li>Data value</li>
+  <li>I/O Port</li>
+<li>Memory Location</li>
+  <li>CPU register</li>
+</ul>
+<p style="font-size:18px;">There can multiple operands and the format of instruction is as follows:</p>
+<p style="font-size:22px;"> MNEMONIC DESTINATION OPERAND, SOURCE OPERAND </p>
+<p style="font-size:18px;">There can multiple operands and the format of instruction is as follows:</p>
+<p style="font-size:18px;">A simple instruction consists of just the opcode. Other instructions may include one or more operands. Instruction can be 
+one-byte instruction, which contains only opcode, or two-byte instructions, where the second byte is the operand or three byte instructions, where the operand
+ makes up the second and third byte.
+<br>
+Based on the operation they perform, all the instructions in the 8051 Microcontroller Instruction Set are divided into five groups. They are:</p>
+<ul>
+  <li>Data Transfer Instructions</li>
+  <li>Arithmetic Instructions</li>
+  <li>Logical Instructions</li>
+<li>Boolean or Bit Manipulation Instructions</li>
+  <li>Program Branching Instructions</li>
+</ul>
+<p style="font-size:18px;">We will now see about these instructions briefly.</p>
+<p style="font-size:25px;">Data Transfer Instructions</p>
+
+<p style="font-size:18px;">The Data Transfer Instructions are associated with transfer with data between registers or external program
+ memory or external data memory.
+ The Mnemonics associated with Data Transfer are given below.</p>
+<ul>
+  <li>MOV</li>
+<li>MOVC</li>
+<li>MOVX</li>
+<li>PUSH</li>
+<li>POP</li>
+<li>XCH</li>
+<li>XCHD</li>
+  
+</ul>
+<p style="font-size:18px;">The following table lists out all the possible data transfer instruction along with 
+other details like addressing mode, size occupied and number machine cycles it takes.</p>
+<img src="d.jpeg"  width="600" height="450" style="vertical-align:middle;margin:0px 250px">
+<p style="font-size:25px;">Arithmetic Instructions</p>
+<p style="font-size:18px;">Using Arithmetic Instructions, you can perform addition, subtraction, multiplication and division. The arithmetic instructions also include increment by one, decrement by one and a special instruction called Decimal Adjust Accumulator.
+
+<br>The Mnemonics associated with the Arithmetic Instructions of the 8051 Microcontroller Instruction Set are:</p>
+<ul>
+  <li>ADD </li>
+<li>ADDC</li>
+<li>SUBB</li>
+<li>INC</li>
+<li>DEC</li>
+<li>MUL</li>
+<li>DIV</li>
+<li>DA A</li>
+<p style="font-size:18px;">The arithmetic instructions has no knowledge about the data format i.e. signed, unsigned, ASCII, BCD, etc. Also, the operations performed by the arithmetic instructions affect flags like carry, overflow, zero, etc. in the PSW Register.
+
+<br>All the possible Mnemonics associated with Arithmetic Instructions are mentioned in the following table. </p>
+<img src="ejpeg.jpeg"  width="600" height="450" style="vertical-align:middle;margin:0px 250px">
+<p style="font-size:25px;">Logical Instructions</p>
+<p style="font-size:18px;">The next group of instructions are the Logical Instructions, which perform logical operations like AND, OR, XOR, NOT, Rotate, Clear and Swap. Logical Instruction are performed on Bytes of data on a bit-by-bit basis.
+
+<br>Mnemonics associated with Logical Instructions are as follows:</p>
+<ul>
+  <li>ANL</li>
+<li>ORL</li>
+<li>XRL</li>
+<li>CLR</li>
+<li>CPL</li>
+<li>RL</li>
+<li>RLC</li>
+<li>RR</li>
+<li>RRC</li>
+<li>SWAP</li>
+<p style="font-size:18px;">The following table shows all the possible Mnemonics of the Logical Instructions. </p>
+<img src="f.jpeg"  width="600" height="450" style="vertical-align:middle;margin:0px 250px">
+<p style="font-size:25px;">Boolean or Bit Manipulation Instructions</p>
+<p style="font-size:18px;">As the name suggests, Boolean or Bit Manipulation Instructions will deal with bit variables. We know that there is a special bit-addressable area in the RAM and some of the Special Function Registers (SFRs) are also bit addressable.
+
+<br>The Mnemonics corresponding to the Boolean or Bit Manipulation instructions are:</p>
+<ul>
+  <li>CLR</li>
+<li>SETB</li>
+<li>MOV</li>
+<li>JC</li>
+<li>JNC</li>
+<li>JB</li>
+<li>JNB</li>
+<li>JBC</li>
+<li>ANL</li>
+<li>ORL</li>
+<li>CPL</li>
+<img src="g.jpeg"  width="600" height="450" style="vertical-align:middle;margin:0px 250px">
+<p style="font-size:25px;">Program Branching Instructions</p>
+<p style="font-size:18px;">The last group of instructions in the 8051 Microcontroller Instruction Set are the Program Branching Instructions. These instructions control the flow of program logic.
+ The mnemonics of the Program Branching Instructions are as follows.</p>
+<ul>
+  <li> LJMP</li>
+<li>AJMP</li>
+<li>SJMP</li>
+<li>JZ</li>
+<li>JNZ</li>
+<li>CJNE</li>
+<li>DJNZ</li>
+<li>NOP</li>
+<li>LCALL</li>
+<li>ACALL</li>
+<li>RET</li>
+<li>RETI</li>
+<li>JMP</li>
+<p style="font-size:18px;">All these instructions, except the NOP (No Operation) affect the Program Counter (PC) in one way or other. Some of these instructions has decision making capability before transferring control to other part of the program.
+
+<br>The following table shows all the mnemonics with respect to the program branching instructions. </p>
+
+<img src="h.jpeg"  width="600" height="450" style="vertical-align:middle;margin:0px 250px">
+<p style="color:green;font-size:40px;">Data transfer group in 8051</p>
+<p style="font-size:18px;">In 8051 Microcontroller there is 28 different instructions under the Data Transfer Group. In total there are 79 opcodes. 
+The flags are not affected by using the data transfer instructions, but the P (Parity) flag may change if the value of A register is changed using Data 
+Transfer Instruction. Similarly, when a data is transferred to the PSW register, the flags will change.
+
+<br>In the following table, we will see the Mnemonics, Lengths, Execution Time in terms of the machine cycle, Number of Opcodes etc.</p>
+<img src="i.jpeg"  width="600" height="450" style="vertical-align:middle;margin:0px 250px">
+<p style="font-size:18px;">If the Clock Frequency is 12MHz, then 1 machine cycle will take 1 µs for execution.</p>
+<p style="font-size:22px;">Examples</p>
+<img src="j.jpeg"  width="600" height="450" style="vertical-align:middle;margin:0px 250px">
+    <a href="8051 architeture.html"><h2>Go Back</h2></a>
+</body>
+</html>

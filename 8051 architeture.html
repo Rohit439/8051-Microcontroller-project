@@ -1,0 +1,185 @@
+<html>
+<head>
+    </head> 
+
+<style>
+    
+   div {
+  background-image:linear-gradient(315deg, #e84393 0%, #000000 74%);
+       background-size: cover;
+       background-repeat: repeat;
+       color: white;
+       font-family: cursive;
+     
+}
+    .linking{
+text-decoration-color: white;
+        font-family: cursive;
+    }
+     .sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color:white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: red;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+    #linkicon
+    {
+        word-spacing: 25px;
+    }
+    
+    #skill icon{
+        word-spacing: 30px;
+        
+    }
+    
+   
+        .PinOut{
+        
+            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1));
+            
+        }
+    
+    </style>
+     <script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+        
+</script>
+   <body>
+     <div class="progress">
+      <div class="indeterminate"></div>
+  </div>
+
+    <div class="container">
+     <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>   
+    <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#The 8051Family feature">The 8051 Family feature</a>
+  <a href="#8051 BlockDiagram">8051 BlockDiagram</a>
+  <a href="#PinOut">PinOut</a>
+  <a href="#The CPU">The CPU</a>
+  <a href="#Program Memory Organization">Program Memory Organization</a>    
+  <a href="#Data Memory Organization">Data Memory Organization</a>
+        <a href="#linking">Linking</a>
+</div>
+
+   <div id="The 8051Family feature">
+       <center><h1>The 8051Family feature</h1></center>
+       <ul>
+       <li><h4>8 bit CPU</h4></li>
+       <li><h4>16 bit Program Counter</h4></li>
+       <li><h4>8 bit program status word(PSW)</h4></li>
+       <li><h4>Eight bit Stack Pointer</h4></li>
+       <li><h4>Internal ROM 4kb</h4></li>
+       <li><h4>Internal RAM 128 bytes</h4></li>
+       <h4><ul><li>4 Register Banks</li></ul></h4>
+       <h4><ul><li>16 bytes bit addressable memory</li></ul></h4>
+       <h4><li>32I/O pins</li></h4>
+       <h4><li>2 16 bit timers</li></h4>
+       <h4><li>Full Duplex Serial Data Communications</li></h4>
+       <h4><li>2 external and 3 interals interrupts sources</li></h4>
+       <h4><li>Oscillator and clock circuit</li></h4>
+           </ul>
+       <div class=row>
+       <div class="column">
+       </div>
+     
+       </div>
+       <div class="column">
+           <center><img style="float:left;  margin: 50px 80px 80px 98px; " src="images.jpg" width="50%"></center>
+       </div>
+       <div class="column">
+       <center><img src="stepper-motor-interfacing-with-8051.jpg" alt="8051" style="width:80%"></center>
+      </div>
+       </div>
+       </div>
+      <hr width="1500px">
+        <div id="8051 BlockDiagram">
+      <center><h1>8051 BlockDiagram</h1></center>  
+        <div id="skill icon">
+        <center><img src="372a0-8051_blockdiagram.png", alt="diagram", style="100%"></center>
+         </div>
+       
+           <div id="PinOut"></div>
+           <h1>Pin Out</h1>
+            <center><img src="8051-Pin-Diagram.jpg", width="60%"></center>
+            
+          
+            <div id="The CPU">
+      <center><h1>The CPU</h1></center>
+          <ul><h3><li>The CPU</li></h3>
+          <h3><li>Accumulator</li></h3>
+          <h3><li>B register</li></h3>
+          <h3><li>PSW</li></h3> 
+          
+        <div id="skill icon">
+        <img src="cpu.jpg">
+        <img src="accumulator.jpg">
+        <img src="register.jpg">
+            <img src="psw.jpg">
+         </div>
+         </ul>
+         </div>
+            
+            
+            <div id="Program Memory Organization">
+            <center><h1>Program Memory Organization</h1></center>
+                <center><img src="rom.png",style="width:40px, height:40px"></center>
+            </div>
+          
+            <div id="Data Memory Organization">
+            <center><h1>Data Memory Organization</h1></center>
+            <center><img src="ram.jpg",style="width:40px,height:40px"></center>
+            
+            
+            </div>
+            
+       <div id="linking">
+    <a href="next1.html"><h2>Click Here...</h2></a>        
+           
+    </div>
+  
+    
+    </div>       
+                
+ 
+           
+    </body>
+</html>
